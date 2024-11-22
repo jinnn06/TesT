@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打地鼠遊戲</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    #game-container {
+      margin: 50px auto;
+      width: 300px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .hole {
+      width: 80px;
+      height: 80px;
+      background-color: #ccc;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .hole.active {
+      background-color: #8b0000;
+    }
+
+    #score {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>打地鼠遊戲</h1>
+  <p id="score">分數：0</p>
+  <div id="game-container">
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+  </div>
+  <script>
+    const holes = document.querySelectorAll('.hole');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
+    let activeHole = null;
+    let gameInterval;
+
+    // 隨機選擇一個洞出現地鼠
+    function showMole() {
+      if (activeHole !== null) {
+        holes[activeHole].classList.remove('active');
+      }
+      const randomIndex = Math.floor(Math.random() * holes.length);
+      activeHole = randomIndex;
+      holes[randomIndex].classList.add('active');
+    }
+
+    // 點擊地鼠得分
+    holes.forEach((hole, index) => {
+      hole.addEventListener('click', () => {
+        if (index === activeHole) {
+          score++;
+          scoreDisplay.textContent = `分數：${score}`;
+          holes[activeHole].classList.remove('active');
+          activeHole = null;
+        }
+      });
+    });
+
+    // 遊戲啟動
+    function startGame() {
+      score = 0;
+      scoreDisplay.textContent = `分數：${score}`;
+      gameInterval = setInterval(showMole, 1000);
+      setTimeout(() => {
+        clearInterval(gameInterval);
+        alert(`遊戲結束！你的最終分數是：${score}`);
+      }, 30000); // 遊戲持續30秒
+    }
+
+    // 啟動遊戲
+    startGame();
+  </script>
+</body>
+</html>
