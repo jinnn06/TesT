@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的社團介紹</title>
+    <link rel="stylesheet" href="header-footer.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2f5269;  
+            --secondary-color: #473600;  
+            --background-color: rgb(215, 215, 215);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', '微軟正黑體', sans-serif;
+            background-color: var(--background-color);
+            color: #2f3542;
+            line-height: 1.6;
+            position: relative; /* 確保 sidebar-menu 參考的是整體頁面 */
+
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sticky-nav nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .sticky-nav nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px;
+        }
+
+        .sticky-nav nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .sticky-nav nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .hamburger {
+            position: fixed; /* 固定在螢幕上 */
+            top: 15px;       /* 距離螢幕頂部的距離 */
+            left: 15px;      /* 距離螢幕左側的距離 */
+            cursor: pointer;
+            z-index: 1001;   /* 確保在側邊欄和其他內容之上 */
+            display: block;  /* 保證在開啟時顯示 */
+        }
+
+
+        .hamburger-line {
+            width: 30px;
+            height: 5px;
+            background-color: rgba(0, 0, 0, 0.401);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        .sidebar-menu {
+            position: fixed; /* 固定在視窗中 */
+            top: 0;
+            left: 0;
+            height: 100%; /* 滿高 */
+            width: 0; /* 初始寬度為 0 */
+            z-index: 1000; /* 保證位於最前 */
+            background: rgba(255, 255, 255, 0.8); /* 透明的白色背景 */
+            overflow-y: auto; /* 如果內容超出高度則滾動 */
+            transition: width 0.5s; /* 寬度的展開動畫 */
+            padding-top: 60px; /* 預留空間避免和標題重疊 */
+        }
+
+        .sidebar-menu a {
+            font-weight: bold; /* 加粗文字 */
+            color: #333; /* 深色文字 */
+            text-decoration: none;
+            padding: 15px 25px;
+            display: block;
+            transition: background 0.3s, font-weight 0.3s; /* 字重過渡效果 */
+        }
+
+        .sidebar-menu a:hover {
+            font-weight: bolder; /* 滑過時更粗 */
+            background: rgba(0, 0, 0, 0.1); /* 添加背景效果 */
+        }
+
+        .sidebar-menu .close-btn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            cursor: pointer;
+            color: rgb(0, 0, 0);
+        }
+
+        .section {
+            background-color: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .footer {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.1);
+        }
+
+        .footer i {
+            font-size: 2rem;
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
+
+        .footer i:hover {
+            transform: scale(1.2) rotate(360deg);
+        }
+        @media screen and (max-width: 768px) {
+            .sticky-nav {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            .section {
+                padding: 20px;
+            }
+        }
+        @media screen and (min-width: 768px) {
+           .hamburger {
+                display: none; /* 隱藏漢堡按鈕 */
+            }
+
+            .sticky-nav {
+                display: block; /* 桌面顯示標準選單 */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="sidebar" class="sidebar-menu">
+        
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <a href="#about" onclick="closeNav()"><i class="fas fa-info-circle"></i> 關於我們</a>
+        <a href="#mission" onclick="closeNav()"><i class="fas fa-bullseye"></i> 社團理念</a>
+        <a href="#activities" onclick="closeNav()"><i class="fas fa-calendar-alt"></i> 活動介紹</a>
+        <a href="#members" onclick="closeNav()"><i class="fas fa-users"></i> 成員組成</a>
+        <a href="#contact" onclick="closeNav()"><i class="fas fa-envelope"></i> 聯絡資訊</a>
+    </div>
+
+    <div id="header-container"></div>
+
+    <div class="sticky-nav">
+        <nav>
+            <a href="#about">關於我們</a>
+            <a href="#mission">社團理念</a>
+            <a href="#activities">活動介紹</a>
+            <a href="#members">成員組成</a>
+            <a href="#contact">聯絡資訊</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div id="about" class="section">
+            <h2>關於我們</h2>
+            <p>這是一個充滿熱情與夢想的社團，我們致力於透過團隊合作，實現共同的目標。每一個成員都是社團不可或缺的重要部分。</p>
+        </div>
+
+        <div id="mission" class="section">
+            <h2>社團理念</h2>
+            <p>我們堅信團結的力量，相信每一個人都有獨特的價值。我們的理念是互相支持、共同成長，並為社會帶來正面的影響。</p>
+        </div>
+
+        <div id="activities" class="section">
+            <h2>活動介紹</h2>
+            <p>我們定期舉辦各種豐富多元的活動，包括：知識分享、技能工作坊、社區服務等，目的是擴大我們的影響力，並為成員提供成長的機會。</p>
+        </div>
+
+        <div id="members" class="section">
+            <h2>成員組成</h2>
+            <p>我們的社團匯集了來自不同背景、不同領域的夥伴。每個人都帶來獨特的視角和專業技能，共同構成了這個多元且充滿活力的團隊。</p>
+        </div>
+
+        <div id="contact" class="section">
+            <h2>聯絡資訊</h2>
+            <p>想了解更多關於我們的資訊？歡迎隨時與我們聯繫。我們期待與對我們社團充滿興趣的朋友們交流。</p>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script>
+        // 動態載入 header 和 footer
+        fetch('header.html')
+            .then(response => response.text()) // 取得 HTML 內容
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html; // 把 HTML 插入到頁面中
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('footer.html')
+            .then(response => response.text()) // 取得 HTML 內容
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html; // 把 HTML 插入到頁面中
+            })
+            .catch(error => console.error('Error loading footer:', error));
+    function openNav() { 
+         if (window.innerWidth < 768) { // 只有手機版執行
+            document.getElementById("sidebar").style.width = "250px"; // 展開側邊欄
+            document.querySelector(".hamburger").style.display = "none"; // 隱藏漢堡選單按鈕
+        }
+    }
+
+    function closeNav() {
+        if (window.innerWidth < 768) { // 只有手機版執行
+            document.getElementById("sidebar").style.width = "0"; // 收起側邊欄
+            document.querySelector(".hamburger").style.display = "block"; // 顯示漢堡選單按鈕
+        }
+    }
+
+    </script>
+</body>
+</html>
